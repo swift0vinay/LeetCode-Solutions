@@ -1,11 +1,10 @@
 class Solution {
     public int maxRotateFunction(int[] ar) {
-        int sum=0;
-        for(int i:ar) 
-            sum += i;
-        int max=0;
-        for(int i=0;i<ar.length;i++)
+        int sum=0,max=0;
+        for(int i=0;i<ar.length;i++){
             max += i*ar[i];
+            sum += ar[i];
+        }
         int prev=max;
         for(int i=ar.length-1;i>=1;i--){
             sum -= ar[i];
