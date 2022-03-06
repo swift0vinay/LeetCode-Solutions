@@ -1,8 +1,12 @@
 class Solution {
     public int[] sortJumbled(int[] mapping, int[] nums) {
         ArrayList<Integer> al=new ArrayList<>();
-        for(int x:nums) al.add(x);
-        Collections.sort(al,(a,b)->getVal(a,mapping)-getVal(b,mapping));
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        for(int x:nums){
+            hm.put(x,getVal(x,mapping));
+            al.add(x);
+        }
+        Collections.sort(al,(a,b)->hm.get(a)-hm.get(b));
         return al.stream().mapToInt(i->i).toArray();
     }
     int getVal(int x,int[] mapping){
