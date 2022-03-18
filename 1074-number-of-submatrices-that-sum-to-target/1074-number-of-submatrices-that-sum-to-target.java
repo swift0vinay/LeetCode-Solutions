@@ -12,11 +12,11 @@ class Solution {
             sum += ar[0][j];
             dp[0][j] = sum;
         }
-        for(int i=1;i<n;i++){
-            for(int j=1;j<m;j++){
-                dp[i][j]=ar[i][j]+dp[i-1][j]+dp[i][j-1]-dp[i-1][j-1];
-            }
-        }
+        // for(int i=1;i<n;i++){
+        //     for(int j=1;j<m;j++){
+        //         dp[i][j]=ar[i][j]+dp[i-1][j]+dp[i][j-1]-dp[i-1][j-1];
+        //     }
+        // }
         // System.out.println("ARRAY ");
         // for(int[] x:dp)
         //     System.out.println(Arrays.toString(x));
@@ -25,7 +25,8 @@ class Solution {
         
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                
+                if(i>0 && j>0)
+                  dp[i][j]=ar[i][j]+dp[i-1][j]+dp[i][j-1]-dp[i-1][j-1];
                 for(int x=i;x>=0;x--){
                     for(int y=j;y>=0;y--){
                         int left = x-1>=0 ? dp[x-1][j]:0;
