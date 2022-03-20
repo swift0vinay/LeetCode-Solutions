@@ -4,16 +4,11 @@ class Solution {
 		int ans[] = new int[12];
 		int max = 0;
 		for (int i = 1; i < total; i++) {
-			String b = Integer.toBinaryString(i);
-			while (b.length() < 12) {
-				b = "0" + b;
-			}
-			char[] br = b.toCharArray();
 			int B[] = new int[12];
 			int reqd = 0;
 			int have = n;
-			for(int ii=11;ii>=0;ii--){
-                if(br[ii]=='1'){
+			for(int ii=0;ii<12;ii++){
+                if(((i>>ii)&1)==1){
                     reqd+=(A[ii]+1);
                 }
             }
@@ -22,7 +17,7 @@ class Solution {
             }
 			int score = 0;
 			for (int ii = 0; ii < 12; ii++) {
-                if(br[ii]=='1')
+                if(((i>>ii)&1)==1)
                     B[ii]=A[ii]+1;
 				if (B[ii] > A[ii]) {
 					score += ii;
