@@ -1,13 +1,16 @@
 class Encrypter {
     
     String dp[]=new String[26];
-    String dic[];
+    HashMap<String,Integer> hm=new HashMap<>();
     public Encrypter(char[] keys, String[] values, String[] dictionary) {
-        dic=dictionary;
         for(int i=0;i<keys.length;i++){
             int index=keys[i]-'a';
             String val=values[i];
             dp[index]=val;
+        }
+        for(String s:dictionary){
+            String get=encrypt(s);
+            hm.put(get,hm.getOrDefault(get,0)+1);
         }
     }
     
@@ -20,12 +23,7 @@ class Encrypter {
     }
     
     public int decrypt(String word2) {
-        int ans=0;
-        for(String s:dic){
-            String get=encrypt(s);
-            if(get.equals(word2))
-                ++ans;
-        }
+        int ans=hm.getOrDefault(word2,0);
         return ans;
     }
 }
