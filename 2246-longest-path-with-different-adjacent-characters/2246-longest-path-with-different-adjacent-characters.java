@@ -21,24 +21,22 @@ class Solution {
     int dfs(int src,boolean[] vis,char parent,int count,char[] ar,ArrayList<ArrayList<Integer>> al){
         vis[src]=true;
         PriorityQueue<int[]> pq=new PriorityQueue<>((a,b)->b[1]-a[1]);
-       
+        int max1=0,max2=0;
         for(Integer z:al.get(src)){
             if(!vis[z]){
                 int zz = dfs(z,vis,ar[src],0,ar,al);
-                pq.add(new int[]{z,zz});
+                if(ar[z]!=ar[src]){
+                    if(zz>max1){
+                        max2=max1;
+                        max1=zz;
+                    }else if(zz>max2){
+                        max2=zz;
+                    }
+                }
             }
         }
-        int op=0;
-        int times=2;
-        int curr=0;
-        while(times>0 && !pq.isEmpty()){
-            int[] z=pq.poll();
-            if(ar[src]!=ar[z[0]]){
-                --times;
-                curr=Integer.max(curr,z[1]);
-                op += z[1];
-            }
-        }
+        int op=max1+max2;
+        int curr=max1;
         ans=Integer.max(ans,op+1);
         return parent == ar[src] ? 0 : curr+1;
     }
