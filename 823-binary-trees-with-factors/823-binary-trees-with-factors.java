@@ -1,37 +1,25 @@
 class Solution {
     public int numFactoredBinaryTrees(int[] ar) {
-        HashMap<Integer,Integer> hm = new HashMap<>();
+        int MOD = 1_000_000_007;
+        int n = ar.length;
         Arrays.sort(ar);
-        for( int x : ar ) {
-            int z = x;
-            int count = 1;
-            for(int i=2;i<=(int)Math.sqrt(z);i++){
-                if(z%i==0){
-                    int k =z/i;
-                    if(z%k==0){
-                        count = add(count,mul(hm.getOrDefault(i,0),hm.getOrDefault(k,0)));
-                        if(i!=k)
-                            count=add(count,mul(hm.getOrDefault(i,0),hm.getOrDefault(k,0)));
+        long dp[]=new long[n];
+        Arrays.fill(dp,1);
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        for(int i=0;i<n;i++)
+            hm.put(ar[i],i);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(ar[i]%ar[j]==0){
+                    int right = ar[i]/ar[j];
+                    if(hm.containsKey(right)) {
+                        dp[i]=(dp[i]+dp[j]*dp[hm.get(right)])%MOD;
                     }
                 }
             }
-            hm.put(x,count);
         }
-        // System.out.println(hm);
-        int ans=0;
-        for(Integer z : hm.keySet()) ans=add(ans,hm.get(z));
-        return ans;
-    }
-    
-    int mul(int a ,int b){
-        long INF=(long)1e9+7;
-        long z = (long)a*b;
-        return (int)(z%INF);
-    }
-    
-    int add(int a ,int b){
-        long INF=(long)1e9+7;
-        long z = (long)a+b;
-        return (int)(z%INF);
+        long ans=0;
+        for(long x:dp) ans+=x;
+        return (int)(ans%MOD);
     }
 }
